@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>İnternet Programlama Final Ödevi - Dijital Odam</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="room-container">
+    <div class="room-wrapper">
+    <img src="img/oda.png" alt="Odam" class="room-image">
+
+    <div class="hotspot clickable" id="computer" style="top: 55%; left: 18%; width: 18%; height: 35%;" onclick="openPC()">
+        <div class="tooltip">Çalışma Masam (Tıkla)</div>
+    </div>
+
+    <div class="hotspot clickable" id="window" style="top: 22%; left: 33%; width: 25%; height: 55%;" onclick="openWindowModal()">
+        <div class="tooltip">Şehirler ve Hayaller (Tıkla)</div>
+    </div>
+
+    <div class="hotspot clickable" id="wardrobe" style="top: 25%; left: 60%; width: 5%; height: 45%;" onclick="openWardrobeModal()">
+        <div class="tooltip">Kendimce bir tarzım var 🕶️</div>
+    </div>
+
+    <div class="hotspot" id="bookshelf" style="top: 25%; left: 65%; width: 10%; height: 45%;">
+        <div class="tooltip">
+            <h3>Okuduğum Kitaplar</h3>
+            <ul>
+                <li>Suç ve Ceza</li>
+                <li>1984</li>
+                <li>Otostopçunun Galaksi Rehberi</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="hotspot" id="bed" style="top: 70%; left: 58%; width: 25%; height: 25%;">
+        <div class="tooltip">Uyumak için çok erken...</div>
+    </div>
+</div>
+</div>
+
+<div id="window-modal" class="modal">
+    <div class="modal-content slider-container">
+        <span class="close" onclick="closeWindowModal()">&times;</span>
+        
+        <div class="city-slide" id="slide-sanliurfa">
+            <h2 class="city-title">Yaşadığım Şehir</h2>
+            <img src="img/Şanlıurfa.jpeg" alt="Şanlıurfa" class="city-image-large">
+            <p>Şu anki durağım. Burada üretiyor ve gelişiyorum.</p>
+        </div>
+        
+        <div class="city-slide" id="slide-istanbul" style="display: none;">
+            <h2 class="city-title">Hayalimdeki Şehir</h2>
+            <img src="img/İstanbul.jpeg" alt="İstanbul" class="city-image-large">
+            <p>Hedefim. Yeni projeler ve daha büyük adımlar için rotam.</p>
+        </div>
+
+        <button class="slider-arrow prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="slider-arrow next" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+</div>
+
+<div id="wardrobe-modal" class="modal">
+    <div class="modal-content slider-container">
+        <span class="close" onclick="closeWardrobeModal()">&times;</span>
+        <h2 class="city-title">Kendimce Bir Tarzım Var 🕶️</h2>
+        
+        <img id="wardrobe-img" src="img/1.jpeg" alt="Tarzım" class="city-image-large">
+        
+        <button class="slider-arrow prev" onclick="changeWardrobeSlide(-1)">&#10094;</button>
+        <button class="slider-arrow next" onclick="changeWardrobeSlide(1)">&#10095;</button>
+    </div>
+</div>
+
+<div id="pc-modal" class="modal fullscreen-pc">
+    <div class="pc-screen-container">
+        <img src="img/bilgisayar.png" alt="Masaüstü" class="pc-bg-img">
+        
+        <span class="close-pc" onclick="closePC()">&times;</span>
+
+        <div class="pc-hotspot" style="top: 38.5%; left: 16%; width: 31%; height: 6%;">
+            <div class="tooltip">Oyun oynamayı çok severim 🎮</div>
+        </div>
+
+        <div class="pc-hotspot clickable desktop-icon" style="top: 46%; left: 15.5%; width: 5.5%; height: 6.5%;" onclick="showSection('projects')">
+             <div class="tooltip">Projelerim</div>
+        </div>
+
+        <div class="pc-hotspot clickable desktop-icon" style="top: 53.5%; left: 15.5%; width: 5.5%; height: 6.5%;" onclick="showSection('skills')">
+             <div class="tooltip">Bildiğim Teknolojiler</div>
+        </div>
+
+        <div class="pc-hotspot clickable desktop-icon" style="top: 51%; left: 51.5%; width: 5.5%; height: 7.5%;" onclick="startGame()">
+             <div class="tooltip">Hadi Oynayalım</div>
+        </div>
+
+        <div id="pc-window" class="pc-inner-window" style="display:none;">
+            <div class="window-header">
+                <div class="window-controls">
+                    <span class="control-btn close-btn" onclick="closeInnerWindow()"></span>
+                    <span class="control-btn min-btn"></span>
+                    <span class="control-btn max-btn"></span>
+                </div>
+                <div class="window-title">Dosya Gezgini</div>
+            </div>
+            
+            <div class="window-body">
+                <div id="skills" class="pc-content" style="display:none;">
+                    <h3>Bildiğim Programlar & Diller</h3>
+                    <ul>
+                        <li>Java, Python, C#, PyQt5</li>
+                        <li>Siber Güvenlik, Kali Linux, Ağ İletişimi</li>
+                        <li>HTML, CSS, JavaScript, SQLite</li>
+                    </ul>
+                </div>
+
+                <div id="projects" class="pc-content" style="display:none;">
+                    <h3>Projelerim</h3>
+                    <ul>
+                        <li><strong>TULPAR:</strong> Yapay Zeka Destekli Afet Yönetim Simülasyonu</li>
+                        <li><strong>Vertex Hackathon:</strong> Hackathon 3.lüğü getiren ekip projesi</li>
+                        <li><strong>Market Kasa Uygulaması:</strong> Python ve SQLite entegrasyonlu arayüz</li>
+                        <li><strong>Donanım:</strong> 74xx serisi mantık kapılarıyla Dijital Saat</li>
+                    </ul>
+                </div>
+
+                <div id="game-container" class="pc-content" style="display:none;">
+                    <h3>Blok Kırıcı</h3>
+                    <p style="font-size: 12px; color: #aaa;">Yön tuşlarıyla çubuğu kontrol et.</p>
+                    <canvas id="brickBreaker" width="480" height="320"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
