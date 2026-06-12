@@ -64,9 +64,8 @@ let gameInterval;
 
 function openPC() {
     const room = document.querySelector('.room-wrapper');
-    room.classList.add('zoom-in-effect'); // Zoom animasyonunu başlat
+    room.classList.add('zoom-in-effect');
     
-    // Animasyon süresi (0.8sn) dolduktan sonra PC ekranını göster
     setTimeout(() => {
         document.getElementById('pc-modal').style.display = 'block';
     }, 800); 
@@ -75,8 +74,8 @@ function openPC() {
 function closePC() {
     document.getElementById('pc-modal').style.display = 'none';
     const room = document.querySelector('.room-wrapper');
-    room.classList.remove('zoom-in-effect'); // Odayı eski haline getir
-    closeInnerWindow(); // Açık klasör varsa kapat
+    room.classList.remove('zoom-in-effect');
+    closeInnerWindow(); 
 }
 
 function showSection(id) {
@@ -90,8 +89,6 @@ function closeInnerWindow() {
     document.getElementById('pc-window').style.display = 'none';
     if(gameInterval) clearInterval(gameInterval);
 }
-
-// startGame() fonksiyonun eskisi gibi kalacak, ona dokunmana gerek yok!
 
 function startGame() {
     showSection('game-container');

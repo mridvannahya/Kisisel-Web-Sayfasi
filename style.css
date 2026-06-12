@@ -1,3 +1,4 @@
+/* --- GENEL ODA AYARLARI --- */
 body { 
     margin: 0; 
     padding: 0; 
@@ -5,7 +6,7 @@ body {
     font-family: sans-serif;
     width: 100vw;
     height: 100vh;
-    overflow: hidden; /* Sayfanın aşağı kaymasını engeller */
+    overflow: hidden; 
 }
 
 .room-container {
@@ -14,12 +15,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Ekrandan taşan kısımları gizler, çerçeveyi yok eder */
+    overflow: hidden; 
 }
 
 .room-wrapper {
     position: relative;
-    /* Sihirli Formül: 16:9 oranını koruyarak ekranı kusursuz kaplar ve tıklamaları bozmaz */
     width: 100vw;
     height: 56.25vw; 
     min-height: 100vh;
@@ -34,18 +34,13 @@ body {
     height: 100%;
     object-fit: cover;
 }
+
 /* Görünmez Tıklama Alanları */
 .hotspot {
     position: absolute;
-    /* Geliştirme aşamasında kutuları görmek istersen aşağıdaki iki satırın başındaki "/*" işaretlerini sil */
-    /* border: 2px solid red; */
-    /* background: rgba(255, 0, 0, 0.2); */
 }
 
-.clickable {
-    cursor: pointer;
-}
-
+.clickable { cursor: pointer; }
 .clickable:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
@@ -69,9 +64,9 @@ body {
 
 .tooltip h3 { margin: 0 0 10px 0; color: #f1c40f; }
 .tooltip ul { margin: 0; padding-left: 20px; text-align: left; }
-.hotspot:hover .tooltip { display: block; }
+.hotspot:hover .tooltip, .pc-hotspot:hover .tooltip { display: block; }
 
-/* Modallar (Açılır Pencereler) */
+/* Modallar (Genel) */
 .modal {
     display: none;
     position: fixed;
@@ -103,7 +98,6 @@ body {
     font-weight: bold;
     cursor: pointer;
 }
-
 .close:hover { color: #f1c40f; }
 
 /* Slider ve Resim Stilleri */
@@ -143,110 +137,51 @@ body {
     to {opacity: 1}
 }
 
-/* Bilgisayar Arayüzü */
-.desktop-icons button {
-    background-color: #34495e;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-}
-.desktop-icons button:hover { background-color: #f1c40f; color: #2c3e50; }
-.pc-content { margin-top: 20px; line-height: 1.6; }
-.pc-content ul { list-style-type: square; padding-left: 20px; }
-
-/* Oyun */
-#game-container { text-align: center; }
-canvas { background: #eee; display: block; margin: 0 auto; border-radius: 5px; }
-/* --- YENİ BİLGİSAYAR VE ZOOM ANİMASYONU --- */
-
-/* Odaya tıklanınca devreye giren yakınlaşma efekti */
-.zoom-in-effect {
-    transform: scale(2) translate(15%, -5%); /* Bilgisayara doğru büyür */
-    opacity: 0;
-    transition: all 0.8s ease-in-out;
-}
-
-/* Masaüstü ekranını tam ekran yapar */
-.fullscreen-pc {
-    background-color: #000; /* Arka planı tamamen siyah yapar */
-    padding: 0;
-    margin: 0;
-}
-
-.pc-desktop {
-    width: 100vw;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
-.close-pc {
-    position: absolute;
-    top: 30px;
-    right: 40px;
-    color: white;
-    font-size: 50px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 1000;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
-}
-
-.close-pc:hover { color: #e74c3c; }
-
 /* --- YENİ BİLGİSAYAR EKRANI VE EFEKTLER --- */
 
 .zoom-in-effect {
-    transform: scale(2) translate(15%, -5%);
+    transform: scale(2.5) translate(10%, 5%);
     opacity: 0;
     transition: all 0.8s ease-in-out;
 }
 
-.fullscreen-pc {
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#pc-modal {
+    background-color: rgba(0, 0, 0, 0.95);
+    overflow-y: auto; 
 }
 
-/* Resmi kırpılmadan merkeze oturtan ana kapsayıcı */
-.pc-screen-container {
+.pc-wrapper {
     position: relative;
     height: 100vh;
-    display: inline-block;
+    aspect-ratio: 3 / 4; 
+    margin: 0 auto; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
 }
 
 .pc-bg-img {
+    width: 100%;
     height: 100%;
-    width: auto;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
 }
 
 .close-pc {
     position: absolute;
-    top: 20px;
-    right: -50px; /* Resmin dışına, siyah alana yerleştirdik */
+    top: 15px;
+    right: 25px;
     color: white;
-    font-size: 50px;
+    font-size: 45px;
+    font-weight: bold;
     cursor: pointer;
     z-index: 1000;
+    text-shadow: 0 0 10px rgba(0,0,0,1);
 }
 .close-pc:hover { color: #e74c3c; }
 
 .pc-hotspot {
     position: absolute;
-    /* İkonlara ince ayar yapmak istersen aşağıdaki yorumu kaldır: */
-    /* border: 1px solid red; */
 }
 
-/* Windows tarzı ikon üzerine gelme (hover) efekti */
 .desktop-icon {
     border-radius: 6px;
     transition: all 0.2s;
@@ -254,20 +189,20 @@ canvas { background: #eee; display: block; margin: 0 auto; border-radius: 5px; }
 }
 
 .desktop-icon:hover {
-    background-color: rgba(255, 255, 255, 0.15); /* Şeffaf beyaz seçim kutusu */
+    background-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* --- CAM EFEKTLİ (GLASSMORPHISM) DOSYA GEZGİNİ --- */
+/* Cam Efektli Dosya Gezgini */
 .pc-inner-window {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(30, 30, 30, 0.7); /* Şeffaf koyu arka plan */
-    backdrop-filter: blur(15px); /* Efsanevi buzlu cam efekti */
+    background: rgba(30, 30, 30, 0.7);
+    backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
@@ -278,7 +213,6 @@ canvas { background: #eee; display: block; margin: 0 auto; border-radius: 5px; }
     overflow: hidden;
 }
 
-/* Pencere Üst Çubuğu */
 .window-header {
     background: rgba(0, 0, 0, 0.4);
     padding: 12px 15px;
@@ -294,9 +228,9 @@ canvas { background: #eee; display: block; margin: 0 auto; border-radius: 5px; }
     border-radius: 50%;
     cursor: pointer;
 }
-.close-btn { background-color: #ff5f56; } /* Kırmızı Kapatma */
-.min-btn { background-color: #ffbd2e; }   /* Sarı Küçültme */
-.max-btn { background-color: #27c93f; }   /* Yeşil Büyütme */
+.close-btn { background-color: #ff5f56; }
+.min-btn { background-color: #ffbd2e; }
+.max-btn { background-color: #27c93f; }
 .close-btn:hover { filter: brightness(0.8); }
 
 .window-title {
@@ -311,5 +245,7 @@ canvas { background: #eee; display: block; margin: 0 auto; border-radius: 5px; }
     padding: 30px;
     color: white;
 }
+.pc-content ul { list-style-type: square; padding-left: 20px; line-height: 1.6; }
 
-.close-inner:hover { color: #e74c3c; }
+#game-container { text-align: center; }
+canvas { background: #eee; display: block; margin: 0 auto; border-radius: 5px; }
