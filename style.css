@@ -1,12 +1,34 @@
+/* =========================================================
+   TASARIM SİSTEMİ (Renk / Tipografi token'ları)
+========================================================= */
+:root {
+    --bg:            #14101a;   /* derin mor-siyah */
+    --panel:         #1f1830;   /* modal yüzeyi */
+    --panel-2:       #2a2140;   /* ikincil yüzey */
+    --ink:           #f3eefb;   /* ana metin */
+    --ink-soft:      #b8aed0;   /* ikincil metin */
+    --gold:          #f5c542;   /* vurgu (orijinal kimlik) */
+    --gold-deep:     #e0a92a;
+    --line:          rgba(255,255,255,0.10);
+    --shadow:        0 24px 60px rgba(0,0,0,0.55);
+    --radius:        16px;
+    --ease:          cubic-bezier(0.22, 1, 0.36, 1);
+    --font-display:  'Sora', system-ui, sans-serif;
+    --font-body:     'Inter', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
 /* --- GENEL ODA AYARLARI --- */
-body { 
-    margin: 0; 
-    padding: 0; 
-    background-color: #1a1a1a; 
-    font-family: sans-serif;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
     width: 100vw;
     height: 100vh;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .room-container {
@@ -15,15 +37,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
+/* Odanın oranını sabitleyen çerçeve (16:9 formatı) */
 .room-wrapper {
     position: relative;
     width: 100vw;
-    height: 56.25vw; 
+    height: 56.25vw;
     min-height: 100vh;
-    min-width: 177.77vh; 
+    min-width: 177.77vh;
+    transition: transform 0.45s ease;   /* kapanışta yumuşak geri zoom */
 }
 
 .room-image {
@@ -35,127 +59,241 @@ body {
     object-fit: cover;
 }
 
-/* Görünmez Tıklama Alanları */
-.hotspot {
-    position: absolute;
-}
+/* Görünmez Tıklama Alanları (Hotspots) */
+.hotspot { position: absolute; }
 
 .clickable { cursor: pointer; }
-.clickable:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+
+/* Beyaz kutu yerine yumuşak ışıltılı çerçeve */
+.clickable:hover,
+.clickable:focus-visible {
+    background: radial-gradient(ellipse at center, rgba(245,197,66,0.18), rgba(245,197,66,0.04) 70%);
+    border-radius: 12px;
+    box-shadow: 0 0 0 2px rgba(245,197,66,0.5), 0 0 28px rgba(245,197,66,0.25);
+    outline: none;
+    transition: box-shadow 0.25s var(--ease), background 0.25s var(--ease);
 }
 
-/* Fareyle Üzerine Gelince Çıkan Yazılar */
+/* Fareyle Üzerine Gelince Çıkan Yazılar (Tooltips) */
 .tooltip {
     display: none;
     position: absolute;
-    bottom: 100%;
+    bottom: calc(100% + 10px);
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.85);
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    white-space: nowrap;
+    background: rgba(20, 16, 26, 0.95);
+    backdrop-filter: blur(6px);
+    color: var(--ink);
+    padding: 12px 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    max-width: min(280px, 70vw);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     z-index: 10;
     pointer-events: none;
+    font-size: 14px;
+    line-height: 1.4;
+}
+/* küçük ok */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 7px solid transparent;
+    border-top-color: rgba(20, 16, 26, 0.95);
+}
+.tip-line { white-space: nowrap; }
+.tip-line em { color: var(--gold); font-style: normal; font-weight: 600; }
+
+.tooltip h3 { margin: 0 0 8px 0; color: var(--gold); font-family: var(--font-display); font-size: 15px; }
+.tooltip ul { margin: 0; padding-left: 18px; text-align: left; }
+.tooltip li { margin: 3px 0; }
+
+.hotspot:hover .tooltip,
+.hotspot:focus-visible .tooltip,
+.hotspot.show-tooltip .tooltip,
+.pc-hotspot:hover .tooltip,
+.pc-hotspot:focus-visible .tooltip { display: block; animation: tipIn 0.2s var(--ease); }
+
+@keyframes tipIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-.tooltip h3 { margin: 0 0 10px 0; color: #f1c40f; }
-.tooltip ul { margin: 0; padding-left: 20px; text-align: left; }
-.hotspot:hover .tooltip, .pc-hotspot:hover .tooltip { display: block; }
-
-/* Modallar (Genel) */
+/* =========================================================
+   MODALLAR
+========================================================= */
 .modal {
     display: none;
     position: fixed;
     z-index: 100;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.8);
+    inset: 0;
+    background: rgba(8, 6, 12, 0.78);
+    backdrop-filter: blur(4px);
 }
+.modal.open { display: block; animation: modalFade 0.25s var(--ease); }
+
+@keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
 
 .modal-content {
-    background-color: #2c3e50;
-    color: white;
-    margin: 5% auto;
-    padding: 30px;
-    border-radius: 12px;
-    width: 70%;
-    max-height: 85vh;
+    background: linear-gradient(160deg, var(--panel), var(--panel-2));
+    color: var(--ink);
+    margin: 5vh auto;
+    padding: 34px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    width: min(760px, 90%);
+    max-height: 88vh;
     overflow-y: auto;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.7);
+    box-shadow: var(--shadow);
     position: relative;
+    animation: modalPop 0.35s var(--ease);
+}
+
+@keyframes modalPop {
+    from { opacity: 0; transform: translateY(18px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .close {
-    color: #fff;
+    color: var(--ink-soft);
     position: absolute;
-    right: 25px;
-    top: 15px;
-    font-size: 35px;
+    right: 18px;
+    top: 12px;
+    font-size: 30px;
+    line-height: 1;
     font-weight: bold;
     cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.2s var(--ease);
+    z-index: 5;
 }
-.close:hover { color: #f1c40f; }
+.close:hover, .close:focus-visible { color: var(--gold); background: rgba(255,255,255,0.06); outline: none; }
 
-/* Slider ve Resim Stilleri */
+/* Slider ve Resim Stilleri (Şehirler ve Tarzım) */
 .slider-container { text-align: center; }
 .city-slide { animation: fadeEffect 0.5s; }
-.city-title { color: #f1c40f; margin-bottom: 20px; font-size: 2em; }
+
+.slide-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(245,197,66,0.35);
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+}
+
+.city-title {
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 800;
+    margin: 0 0 22px 0;
+    font-size: clamp(1.5em, 3.5vw, 2.2em);
+    letter-spacing: -0.01em;
+}
 
 .city-image-large {
     width: 90%;
     max-height: 55vh;
     object-fit: contain;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     margin: 0 auto;
     display: block;
+    background: rgba(0,0,0,0.25);
 }
+
+.modal-content p { color: var(--ink-soft); margin-top: 18px; font-size: 15px; }
 
 .slider-arrow {
     cursor: pointer;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    padding: 16px;
+    width: 52px;
+    height: 52px;
     color: white;
-    font-weight: bold;
-    font-size: 30px;
-    border-radius: 5px;
-    background-color: rgba(0,0,0,0.5);
-    border: none;
+    font-size: 22px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.45);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s var(--ease);
 }
-.slider-arrow.prev { left: 20px; }
-.slider-arrow.next { right: 20px; }
-.slider-arrow:hover { background-color: rgba(0,0,0,0.9); }
-
-@keyframes fadeEffect {
-    from {opacity: 0.2}
-    to {opacity: 1}
+.slider-arrow.prev { left: 18px; }
+.slider-arrow.next { right: 18px; }
+.slider-arrow:hover, .slider-arrow:focus-visible {
+    background: var(--gold);
+    color: #1a1320;
+    border-color: var(--gold);
+    outline: none;
+    transform: translateY(-50%) scale(1.08);
 }
 
-/* --- YENİ BİLGİSAYAR EKRANI VE EFEKTLER --- */
+/* Nokta göstergeleri (şehirler) */
+.slider-dots { display: flex; gap: 10px; justify-content: center; margin-top: 22px; }
+.slider-dots .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: 0.2s var(--ease);
+}
+.slider-dots .dot.active { background: var(--gold); transform: scale(1.25); }
 
+/* Sayaç (tarzım) */
+.wardrobe-counter {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+}
+.wardrobe-counter #wardrobe-current { color: var(--gold); font-weight: 700; }
+
+@keyframes fadeEffect { from { opacity: 0.2; } to { opacity: 1; } }
+
+/* =========================================================
+   BİLGİSAYAR EKRANI VE EFEKTLER
+========================================================= */
+/* Masaya tıklayınca SOLDAKİ iMac ekranına ÇOK YAVAŞ zoom (2.2sn),
+   sonra bilgisayar arayüzü gelir. opacity:0 yok → lacivert boşluk görünmez. */
 .zoom-in-effect {
-    transform: scale(2.5) translate(10%, 5%);
-    opacity: 0;
-    transition: all 0.8s ease-in-out;
+    transform: scale(3.3);
+    transform-origin: 28% 59%;   /* masadaki iMac ekranının tam merkezi */
+    transition: transform 2.2s cubic-bezier(0.45, 0, 0.85, 1);  /* yavaş başlar, ekrana doğru süzülür */
 }
 
+/* ÖNEMLİ: backdrop-filter, position:fixed çocukları (kırmızı çarpı) kendine
+   bağladığı için burada KAPATILIYOR — böylece çarpı her zaman ekranda kalır. */
 #pc-modal {
-    background-color: rgba(0, 0, 0, 0.95);
-    overflow-y: auto; 
+    background-color: #000;
+    overflow: hidden;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
+/* Zoom'dan sonra ekran biraz daha yumuşak belirsin */
+#pc-modal.open { animation: modalFade 0.6s ease; }
 
 .pc-wrapper {
-    position: relative;
-    height: 100vh;
-    aspect-ratio: 3 / 4; 
-    margin: 0 auto; 
-    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 135vw;
 }
 
 .pc-bg-img {
@@ -165,87 +303,261 @@ body {
     display: block;
 }
 
-.close-pc {
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    color: white;
-    font-size: 45px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 1000;
-    text-shadow: 0 0 10px rgba(0,0,0,1);
+/* Modal açılırken ekran görseli hafif zoom'dan yerine otursun ("ekrana giriş" hissi") */
+#pc-modal.open .pc-bg-img { animation: screenSettle 0.6s ease-out both; }
+@keyframes screenSettle {
+    from { transform: scale(1.18); opacity: 0.25; }
+    to   { transform: scale(1);    opacity: 1; }
 }
-.close-pc:hover { color: #e74c3c; }
 
-.pc-hotspot {
-    position: absolute;
+/* Çıkış Tuşu */
+.close-pc {
+    position: fixed;
+    top: 28px;
+    right: 32px;
+    width: 52px;
+    height: 52px;
+    background: #e74c3c;
+    color: white;
+    font-size: 32px;
+    line-height: 1;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 8px 22px rgba(231,76,60,0.5);
+    transition: 0.25s var(--ease);
 }
+.close-pc:hover, .close-pc:focus-visible {
+    background: #c0392b;
+    transform: scale(1.12) rotate(90deg);
+    outline: none;
+}
+
+.pc-hotspot { position: absolute; }
 
 .desktop-icon {
-    border-radius: 6px;
-    transition: all 0.2s;
+    border-radius: 8px;
+    transition: all 0.2s var(--ease);
     border: 1px solid transparent;
 }
-
-.desktop-icon:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+.desktop-icon:hover, .desktop-icon:focus-visible {
+    background-color: rgba(255,255,255,0.15);
     backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.35);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    outline: none;
 }
 
-/* Cam Efektli Dosya Gezgini */
+/* Cam Efektli (Glassmorphism) Dosya Gezgini */
 .pc-inner-window {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(30, 30, 30, 0.7);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
+    background: rgba(24, 20, 34, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 14px;
     width: auto;
-    min-width: 550px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    min-width: 560px;
+    max-width: 92vw;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.65);
     z-index: 100;
     overflow: hidden;
+    animation: modalPop 0.3s var(--ease);
 }
 
 .window-header {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 12px 15px;
+    background: rgba(0,0,0,0.4);
+    padding: 12px 16px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .window-controls { display: flex; gap: 8px; }
-.control-btn {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    cursor: pointer;
-}
+.control-btn { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; }
 .close-btn { background-color: #ff5f56; }
-.min-btn { background-color: #ffbd2e; }
-.max-btn { background-color: #27c93f; }
+.min-btn  { background-color: #ffbd2e; }
+.max-btn  { background-color: #27c93f; }
 .close-btn:hover { filter: brightness(0.8); }
 
 .window-title {
     color: #ddd;
     font-size: 13px;
-    margin-left: 20px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    margin-left: 18px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    font-family: var(--font-display);
 }
 
-.window-body {
-    padding: 30px;
-    color: white;
+.window-body { padding: 28px; color: var(--ink); }
+.pc-content h3 { font-family: var(--font-display); color: var(--gold); margin-top: 0; }
+.pc-content ul { list-style: none; padding-left: 0; line-height: 1.7; }
+.pc-content li { padding-left: 22px; position: relative; }
+.pc-content li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--gold);
 }
-.pc-content ul { list-style-type: square; padding-left: 20px; line-height: 1.6; }
+.pc-content strong { color: var(--ink); }
 
 #game-container { text-align: center; }
-canvas { background: #eee; display: block; margin: 0 auto; border-radius: 5px; }
+.game-hint { font-size: 12px; color: var(--ink-soft); margin-top: 0; }
+canvas {
+    background: #0d0a12;
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    touch-action: none;            /* mobilde kaydırmayı engelle, oyun kaysın */
+    max-width: 100%;
+}
+
+/* Mobil dokunmatik oyun kontrolleri (varsayılan: gizli) */
+.game-touch-controls { display: none; gap: 16px; justify-content: center; margin-top: 14px; }
+.touch-btn {
+    width: 64px; height: 48px;
+    font-size: 20px;
+    color: var(--ink);
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+.touch-btn:active { background: var(--gold); color: #1a1320; }
+
+/* Mobil keşif ipucu */
+.scroll-hint {
+    display: none;
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 90;
+    background: rgba(20,16,26,0.92);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    animation: hintPulse 2s ease-in-out infinite;
+}
+@keyframes hintPulse { 0%,100% { opacity: 0.85; } 50% { opacity: 1; transform: translateX(-50%) translateY(-3px); } }
+
+/* =========================================================
+   MOBİL UYUMLULUK VE DOKUNMATİK EKRAN
+========================================================= */
+@media screen and (max-width: 768px) {
+
+    /* ODA TAM EKRAN: yüksekliği ekranı doldurur, genişlik taşar → PARMAKLA KAYDIRARAK gezilir */
+    body { overflow: hidden !important; }
+    .room-container {
+        display: block !important;
+        overflow: auto !important;            /* yatay/dikey kaydırma */
+        -webkit-overflow-scrolling: touch;
+        width: 100vw;
+        height: 100vh;
+    }
+    .room-wrapper {
+        position: relative !important;
+        width: 177.78vh !important;           /* 16:9, yüksekliğe göre → ekranı doldurur */
+        height: 100vh !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+    }
+
+    .scroll-hint { display: block; }
+
+    /* Tıklanabilir alanlar artık GÖRÜNÜR ve etiketli (dokununca ne olduğu belli) */
+    .hotspot.clickable,
+    .pc-hotspot.clickable {
+        outline: 2px dashed rgba(245,197,66,0.85);
+        outline-offset: -2px;
+        border-radius: 10px;
+        background: rgba(245,197,66,0.12);
+        animation: tapPulse 2.2s ease-in-out infinite;
+    }
+
+    /* Etiketler sürekli görünsün (hover olmadığı için) */
+    .hotspot.clickable .tooltip,
+    .pc-hotspot.clickable .tooltip {
+        display: block !important;
+        animation: none;
+    }
+    .tooltip {
+        max-width: 70vw;
+        font-size: 11px;
+        padding: 7px 10px;
+    }
+    .tip-line { white-space: nowrap; }
+
+    /* Modallar */
+    .modal-content {
+        width: 92% !important;
+        margin: 6vh auto !important;
+        padding: 20px !important;
+        max-height: 86vh !important;
+    }
+    .slider-arrow { width: 44px; height: 44px; font-size: 18px; }
+    .slider-arrow.prev { left: 6px; }
+    .slider-arrow.next { right: 6px; }
+
+    /* BİLGİSAYAR TAM EKRAN: yükseklik ekranı doldurur, görselin oranı korunur */
+    #pc-modal { overflow: auto !important; -webkit-overflow-scrolling: touch; }
+
+    .pc-wrapper {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        height: 100vh !important;
+        width: 74.07vh !important;    /* 1:1.35 oran → görsel kırpılmadan ekranı doldurur */
+        margin: 0 auto !important;
+    }
+
+    /* Dosya gezgini ekranın ortasında sabit dursun (kaydırmadan etkilenmesin) */
+    .pc-inner-window {
+        position: fixed !important;
+        width: 92% !important;
+        min-width: 0 !important;
+        max-width: 92% !important;
+    }
+    .window-body { padding: 20px; }
+
+    /* Kırmızı çarpı her zaman görünür (artık viewport'a sabit) */
+    .close-pc {
+        position: fixed !important;
+        top: 14px !important;
+        right: 14px !important;
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 30px !important;
+    }
+
+    canvas { width: 100% !important; height: auto !important; }
+    .game-touch-controls { display: flex; }   /* mobilde sol/sağ butonları göster */
+}
+
+@keyframes tapPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,197,66,0.0); }
+    50%      { box-shadow: 0 0 14px 2px rgba(245,197,66,0.35); }
+}
+
+/* Hareketi azalt tercihi: yalnızca sürekli dönen dekoratif animasyonları sakinleştir.
+   Masaya zoom efekti BİLEREK korunur (kullanıcı bu geçişi özellikle istedi). */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-hint,
+    .hotspot.clickable,
+    .pc-hotspot.clickable { animation: none !important; }
+}

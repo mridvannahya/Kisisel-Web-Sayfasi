@@ -2,30 +2,46 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>İnternet Programlama Final Ödevi - Dijital Odam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dijital odam — projelerim, tarzım, yaşadığım ve hayalimdeki şehirler. İnternet Programlama final ödevi.">
+    <meta name="theme-color" content="#14101a">
+    <title>Dijital Odam · İnternet Programlama</title>
+
+    <!-- Tipografi: karakterli başlık + okunaklı gövde -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- Mobilde keşif ipucu -->
+<div id="scroll-hint" class="scroll-hint">✦ Parmağınla kaydırarak odayı keşfet</div>
+
 <div class="room-container">
     <div class="room-wrapper">
-        <img src="img/oda.png" alt="Odam" class="room-image">
+        <img src="img/oda.png" alt="Çalışma odamın görünümü" class="room-image">
 
-        <div class="hotspot clickable" id="computer" style="top: 55%; left: 18%; width: 18%; height: 35%;" onclick="openPC()">
-            <div class="tooltip">Çalışma Masam (Tıkla)</div>
+        <div class="hotspot clickable" id="computer" style="top: 55%; left: 18%; width: 18%; height: 35%;"
+             role="button" tabindex="0" aria-label="Çalışma masamı aç" onclick="openPC()">
+            <div class="tooltip"><span class="tip-line">💻 Çalışma Masam</span></div>
         </div>
 
-        <div class="hotspot clickable" id="window" style="top: 22%; left: 33%; width: 25%; height: 55%;" onclick="openWindowModal()">
-            <div class="tooltip">Şehirler ve Hayaller (Tıkla)</div>
+        <div class="hotspot clickable" id="window" style="top: 22%; left: 33%; width: 25%; height: 55%;"
+             role="button" tabindex="0" aria-label="Şehirler ve hayaller penceresini aç" onclick="openWindowModal()">
+            <div class="tooltip"><span class="tip-line">🌆 Şehirler ve Hayaller</span></div>
         </div>
 
-        <div class="hotspot clickable" id="wardrobe" style="top: 25%; left: 60%; width: 5%; height: 45%;" onclick="openWardrobeModal()">
-            <div class="tooltip">Kendimce bir tarzım var 🕶️</div>
+        <div class="hotspot clickable" id="wardrobe" style="top: 25%; left: 60%; width: 5%; height: 45%;"
+             role="button" tabindex="0" aria-label="Tarzım galerisini aç" onclick="openWardrobeModal()">
+            <div class="tooltip"><span class="tip-line">🕶️ Tarzım</span></div>
         </div>
 
-        <div class="hotspot" id="bookshelf" style="top: 25%; left: 65%; width: 10%; height: 45%;">
+        <div class="hotspot" id="bookshelf" style="top: 25%; left: 65%; width: 10%; height: 45%;"
+             role="button" tabindex="0" aria-label="Okuduğum kitaplar">
             <div class="tooltip">
-                <h3>Okuduğum Kitaplar</h3>
+                <h3>📚 Okuduğum Kitaplar</h3>
                 <ul>
                     <li>Suç ve Ceza</li>
                     <li>1984</li>
@@ -34,80 +50,97 @@
             </div>
         </div>
 
-        <div class="hotspot" id="bed" style="top: 70%; left: 58%; width: 25%; height: 25%;">
-            <div class="tooltip">Uyumak için çok erken...</div>
+        <div class="hotspot" id="bed" style="top: 70%; left: 58%; width: 25%; height: 25%;"
+             role="button" tabindex="0" aria-label="Yatak">
+            <div class="tooltip"><span class="tip-line">🛏️ Uyumak için çok erken...</span></div>
         </div>
     </div>
 </div>
 
-<div id="window-modal" class="modal">
+<!-- ŞEHİRLER -->
+<div id="window-modal" class="modal" role="dialog" aria-modal="true" aria-label="Şehirler ve hayaller">
     <div class="modal-content slider-container">
-        <span class="close" onclick="closeWindowModal()">&times;</span>
-        
+        <span class="close" role="button" tabindex="0" aria-label="Kapat" onclick="closeWindowModal()">&times;</span>
+
         <div class="city-slide" id="slide-sanliurfa">
+            <span class="slide-eyebrow">Şu an buradayım</span>
             <h2 class="city-title">Yaşadığım Şehir</h2>
             <img src="img/Şanlıurfa.jpeg" alt="Şanlıurfa" class="city-image-large">
             <p>Şu anki durağım. Burada üretiyor ve gelişiyorum.</p>
         </div>
-        
+
         <div class="city-slide" id="slide-istanbul" style="display: none;">
+            <span class="slide-eyebrow">Rotam bu yöne</span>
             <h2 class="city-title">Hayalimdeki Şehir</h2>
             <img src="img/İstanbul.jpeg" alt="İstanbul" class="city-image-large">
             <p>Hedefim. Yeni projeler ve daha büyük adımlar için rotam.</p>
         </div>
 
-        <button class="slider-arrow prev" onclick="changeSlide(-1)">&#10094;</button>
-        <button class="slider-arrow next" onclick="changeSlide(1)">&#10095;</button>
+        <button class="slider-arrow prev" aria-label="Önceki" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="slider-arrow next" aria-label="Sonraki" onclick="changeSlide(1)">&#10095;</button>
+
+        <div class="slider-dots" id="window-dots">
+            <span class="dot" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
+        </div>
     </div>
 </div>
 
-<div id="wardrobe-modal" class="modal">
+<!-- TARZIM -->
+<div id="wardrobe-modal" class="modal" role="dialog" aria-modal="true" aria-label="Tarzım">
     <div class="modal-content slider-container">
-        <span class="close" onclick="closeWardrobeModal()">&times;</span>
+        <span class="close" role="button" tabindex="0" aria-label="Kapat" onclick="closeWardrobeModal()">&times;</span>
+        <span class="slide-eyebrow">Galeri</span>
         <h2 class="city-title">Kendimce Bir Tarzım Var 🕶️</h2>
-        
-        <img id="wardrobe-img" src="img/1.jpeg" alt="Tarzım" class="city-image-large">
-        
-        <button class="slider-arrow prev" onclick="changeWardrobeSlide(-1)">&#10094;</button>
-        <button class="slider-arrow next" onclick="changeWardrobeSlide(1)">&#10095;</button>
+
+        <img id="wardrobe-img" src="img/1.jpeg" alt="Tarzımdan bir kare" class="city-image-large">
+        <span class="wardrobe-counter"><span id="wardrobe-current">1</span> / 10</span>
+
+        <button class="slider-arrow prev" aria-label="Önceki" onclick="changeWardrobeSlide(-1)">&#10094;</button>
+        <button class="slider-arrow next" aria-label="Sonraki" onclick="changeWardrobeSlide(1)">&#10095;</button>
     </div>
 </div>
 
-<div id="pc-modal" class="modal">
+<!-- BİLGİSAYAR -->
+<div id="pc-modal" class="modal" role="dialog" aria-modal="true" aria-label="Masaüstü">
+
+    <span class="close-pc" role="button" tabindex="0" aria-label="Bilgisayardan çık" onclick="closePC()">&times;</span>
+
     <div class="pc-wrapper">
-        <img src="img/bilgisayar.png" alt="Masaüstü" class="pc-bg-img">
-        
-        <span class="close-pc" onclick="closePC()">&times;</span>
+        <img src="img/bilgisayar.png" alt="Masaüstü ekranı" class="pc-bg-img">
 
         <div class="pc-hotspot" style="top: 38%; left: 15.5%; width: 31%; height: 6%;">
-            <div class="tooltip">Oyun oynamayı çok severim 🎮</div>
+            <div class="tooltip"><span class="tip-line">🎮 Oyun oynamayı çok severim</span></div>
         </div>
 
-        <div class="pc-hotspot clickable desktop-icon" style="top: 45.5%; left: 15%; width: 6.5%; height: 6.5%;" onclick="showSection('projects')">
-             <div class="tooltip">Projelerim</div>
+        <div class="pc-hotspot clickable desktop-icon" style="top: 45.5%; left: 15%; width: 6.5%; height: 6.5%;"
+             role="button" tabindex="0" aria-label="Projelerim" onclick="showSection('projects')">
+             <div class="tooltip"><span class="tip-line">Projelerim</span></div>
         </div>
 
-        <div class="pc-hotspot clickable desktop-icon" style="top: 53.5%; left: 15%; width: 6.5%; height: 6.5%;" onclick="showSection('skills')">
-             <div class="tooltip">Bildiğim Teknolojiler</div>
+        <div class="pc-hotspot clickable desktop-icon" style="top: 53.5%; left: 15%; width: 6.5%; height: 6.5%;"
+             role="button" tabindex="0" aria-label="Bildiğim teknolojiler" onclick="showSection('skills')">
+             <div class="tooltip"><span class="tip-line">Bildiğim Teknolojiler</span></div>
         </div>
 
-        <div class="pc-hotspot clickable desktop-icon" style="top: 51.5%; left: 51.5%; width: 6.5%; height: 6.5%;" onclick="startGame()">
-             <div class="tooltip">Hadi Oynayalım</div>
+        <div class="pc-hotspot clickable desktop-icon" style="top: 51.5%; left: 51.5%; width: 6.5%; height: 6.5%;"
+             role="button" tabindex="0" aria-label="Oyunu başlat" onclick="startGame()">
+             <div class="tooltip"><span class="tip-line">Hadi Oynayalım</span></div>
         </div>
 
         <div id="pc-window" class="pc-inner-window" style="display:none;">
             <div class="window-header">
                 <div class="window-controls">
-                    <span class="control-btn close-btn" onclick="closeInnerWindow()"></span>
+                    <span class="control-btn close-btn" role="button" tabindex="0" aria-label="Pencereyi kapat" onclick="closeInnerWindow()"></span>
                     <span class="control-btn min-btn"></span>
                     <span class="control-btn max-btn"></span>
                 </div>
                 <div class="window-title">Dosya Gezgini</div>
             </div>
-            
+
             <div class="window-body">
                 <div id="skills" class="pc-content" style="display:none;">
-                    <h3>Bildiğim Programlar & Diller</h3>
+                    <h3>Bildiğim Programlar &amp; Diller</h3>
                     <ul>
                         <li>Java, Python, C#, PyQt5</li>
                         <li>Siber Güvenlik, Kali Linux, Ağ İletişimi</li>
@@ -119,7 +152,7 @@
                     <h3>Projelerim</h3>
                     <ul>
                         <li><strong>TULPAR:</strong> Yapay Zeka Destekli Afet Yönetim Simülasyonu</li>
-                        <li><strong>Vertex Hackathon:</strong> Hackathon 3.lüğü getiren ekip projesi</li>
+                        <li><strong>EBHack Hackathon:</strong> Hackathon 3.lüğü getiren ekip projesi</li>
                         <li><strong>Market Kasa Uygulaması:</strong> Python ve SQLite entegrasyonlu arayüz</li>
                         <li><strong>Donanım:</strong> 74xx serisi mantık kapılarıyla Dijital Saat</li>
                     </ul>
@@ -127,8 +160,13 @@
 
                 <div id="game-container" class="pc-content" style="display:none;">
                     <h3>Blok Kırıcı</h3>
-                    <p style="font-size: 12px; color: #aaa;">Yön tuşlarıyla çubuğu kontrol et.</p>
+                    <p class="game-hint">Çubuğu fareyle, parmağınla ya da yön tuşlarıyla kontrol et.</p>
                     <canvas id="brickBreaker" width="480" height="320"></canvas>
+                    <!-- Mobil için dokunmatik kontroller -->
+                    <div class="game-touch-controls">
+                        <button type="button" class="touch-btn" data-dir="left" aria-label="Sola">&#10094;</button>
+                        <button type="button" class="touch-btn" data-dir="right" aria-label="Sağa">&#10095;</button>
+                    </div>
                 </div>
             </div>
         </div>
