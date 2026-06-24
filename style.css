@@ -561,3 +561,81 @@ canvas {
     .hotspot.clickable,
     .pc-hotspot.clickable { animation: none !important; }
 }
+/* =========================================================
+   KÜTÜPHANE (KİTAPLIK) EFEKTLERİ
+========================================================= */
+.library-container {
+    background: linear-gradient(160deg, #2a1f1d, #1a1210); /* Ahşap/Karanlık hissiyatı */
+}
+
+.bookshelf {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 0 10px;
+}
+
+.shelf {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4px;
+    border-bottom: 16px solid #4a3018; /* Ahşap raf kalınlığı */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.6);
+    padding-bottom: 0;
+    border-radius: 4px;
+}
+
+.book {
+    width: 45px;
+    border-radius: 4px 4px 0 0;
+    box-shadow: inset 4px 0 10px rgba(0,0,0,0.15), inset -2px 0 5px rgba(0,0,0,0.3), 3px 0 5px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    position: relative;
+}
+
+/* Kitapların üzerine fare ile gelince hafif yukarı kalkma efekti */
+.book:hover {
+    transform: translateY(-15px);
+    box-shadow: inset 4px 0 10px rgba(0,0,0,0.15), inset -2px 0 5px rgba(0,0,0,0.3), 8px 10px 15px rgba(0,0,0,0.6);
+    z-index: 2;
+}
+
+/* Yazıların dikey olması */
+.book-title {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    color: #f0e6d2; /* Eskimiş sayfa rengi */
+    font-family: serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    white-space: nowrap;
+    padding: 10px 0;
+    pointer-events: none;
+}
+
+/* Kitap Kapak Renkleri (Gerçekçi gölgelerle) */
+.book.red { background: linear-gradient(to right, #7b1113, #8b0000, #5a0000); }
+.book.blue { background: linear-gradient(to right, #102a4a, #00008b, #00005a); }
+.book.green { background: linear-gradient(to right, #114a11, #006400, #003a00); }
+.book.brown { background: linear-gradient(to right, #5c3a21, #8b4513, #4a2500); }
+.book.black { background: linear-gradient(to right, #2c3535, #2f4f4f, #1a2f2f); }
+.book.purple { background: linear-gradient(to right, #3a114a, #4b0082, #2a004a); }
+
+/* Kitap kapaklarındaki yatay çizgiler (eski kitap tasarımı detayları) */
+.book::after {
+    content: "";
+    position: absolute;
+    top: 10px; left: 0; right: 0;
+    height: 2px;
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 120px 0 rgba(255,255,255,0.15);
+}

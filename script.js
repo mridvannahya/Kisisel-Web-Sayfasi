@@ -43,7 +43,7 @@ function showSlide(index) {
    GİYSİ DOLABI (TARZIM) MANTIĞI
 ================================= */
 let currentWardrobeIndex = 1;
-const totalWardrobeImages = 10;
+const totalWardrobeImages = 9;
 
 function openWardrobeModal() {
     openModal('wardrobe-modal');
@@ -315,8 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
         (open === 'pc-modal') ? closePC() : closeModal(open);
     });
 
-    // Dış karanlık alana tıklayınca kapat (şehir/tarzım)
-    ['window-modal', 'wardrobe-modal'].forEach(id => {
+   // Dış karanlık alana tıklayınca kapat (şehir/tarzım/kütüphane)
+    ['window-modal', 'wardrobe-modal', 'bookshelf-modal'].forEach(id => {
         const modal = document.getElementById(id);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(id); });
     });
@@ -350,3 +350,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (rc) rc.addEventListener('scroll', hide, { once: true, passive: true });
     }
 });
+/* ===============================
+   KİTAPLIK MANTIĞI
+================================= */
+function openBookshelfModal() {
+    openModal('bookshelf-modal');
+}
+function closeBookshelfModal() {
+    closeModal('bookshelf-modal');
+}

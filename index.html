@@ -38,16 +38,9 @@
             <div class="tooltip"><span class="tip-line">🕶️ Tarzım</span></div>
         </div>
 
-        <div class="hotspot" id="bookshelf" style="top: 25%; left: 65%; width: 10%; height: 45%;"
-             role="button" tabindex="0" aria-label="Okuduğum kitaplar">
-            <div class="tooltip">
-                <h3>📚 Okuduğum Kitaplar</h3>
-                <ul>
-                    <li>Suç ve Ceza</li>
-                    <li>1984</li>
-                    <li>Otostopçunun Galaksi Rehberi</li>
-                </ul>
-            </div>
+        <div class="hotspot clickable" id="bookshelf" style="top: 25%; left: 65%; width: 10%; height: 45%;"
+             role="button" tabindex="0" aria-label="Okuduğum kitaplar" onclick="openBookshelfModal()">
+            <div class="tooltip"><span class="tip-line">📚 Kütüphanem</span></div>
         </div>
 
         <div class="hotspot" id="bed" style="top: 70%; left: 58%; width: 25%; height: 25%;"
@@ -94,7 +87,7 @@
         <h2 class="city-title">Kendimce Bir Tarzım Var 🕶️</h2>
 
         <img id="wardrobe-img" src="img/1.jpeg" alt="Tarzımdan bir kare" class="city-image-large">
-        <span class="wardrobe-counter"><span id="wardrobe-current">1</span> / 10</span>
+        <span class="wardrobe-counter"><span id="wardrobe-current">1</span> / 9</span>
 
         <button class="slider-arrow prev" aria-label="Önceki" onclick="changeWardrobeSlide(-1)">&#10094;</button>
         <button class="slider-arrow next" aria-label="Sonraki" onclick="changeWardrobeSlide(1)">&#10095;</button>
@@ -168,6 +161,48 @@
                         <button type="button" class="touch-btn" data-dir="right" aria-label="Sağa">&#10095;</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- KÜTÜPHANE (KİTAPLIK) -->
+<div id="bookshelf-modal" class="modal" role="dialog" aria-modal="true" aria-label="Kütüphanem">
+    <div class="modal-content library-container">
+        <span class="close" role="button" tabindex="0" aria-label="Kapat" onclick="closeBookshelfModal()">&times;</span>
+        <span class="slide-eyebrow">Okuduklarım</span>
+        <h2 class="city-title">Kütüphanem 📚</h2>
+
+        <div class="bookshelf">
+            <!-- Raf 1: Senin Okudukların -->
+            <div class="shelf">
+                <div class="book red" style="height: 190px;"><span class="book-title">Sefiller</span></div>
+                <div class="book blue" style="height: 175px;"><span class="book-title">Aşk ve Gurur</span></div>
+                <div class="book green" style="height: 200px;"><span class="book-title">Tutunamayanlar</span></div>
+                <div class="book purple" style="height: 195px;"><span class="book-title">Tehlikeli Oyunlar</span></div>
+                <div class="book black" style="height: 160px;"><span class="book-title">Siyah İnci</span></div>
+                <div class="book brown" style="height: 150px;"><span class="book-title">Martı</span></div>
+            </div>
+            
+            <!-- Raf 2: Dünya Klasikleri & Roman -->
+            <div class="shelf">
+                <div class="book blue" style="height: 185px;"><span class="book-title">Suç ve Ceza</span></div>
+                <div class="book black" style="height: 170px;"><span class="book-title">1984</span></div>
+                <div class="book brown" style="height: 210px;"><span class="book-title">Savaş ve Barış</span></div>
+                <div class="book red" style="height: 165px;"><span class="book-title">Şeker Portakalı</span></div>
+                <div class="book green" style="height: 180px;"><span class="book-title">Simyacı</span></div>
+                <div class="book purple" style="height: 190px;"><span class="book-title">Satranç</span></div>
+                <div class="book blue" style="height: 155px;"><span class="book-title">Dönüşüm</span></div>
+            </div>
+            
+            <!-- Raf 3: Mitoloji, Tarih ve İlgi Alanları -->
+            <div class="shelf">
+                <div class="book brown" style="height: 200px;"><span class="book-title">İlyada</span></div>
+                <div class="book red" style="height: 195px;"><span class="book-title">Odysseia</span></div>
+                <div class="book purple" style="height: 185px;"><span class="book-title">Mitoloji 101</span></div>
+                <div class="book black" style="height: 210px;"><span class="book-title">Türklerin Tarihi</span></div>
+                <div class="book green" style="height: 190px;"><span class="book-title">Sapiens</span></div>
+                <div class="book blue" style="height: 175px;"><span class="book-title">Devlet</span></div>
+                <div class="book black" style="height: 180px;"><span class="book-title">Ağdaki Hayalet</span></div>
             </div>
         </div>
     </div>
