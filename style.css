@@ -2,12 +2,12 @@
    TASARIM SİSTEMİ (Renk / Tipografi token'ları)
 ========================================================= */
 :root {
-    --bg:            #14101a;   /* derin mor-siyah */
-    --panel:         #1f1830;   /* modal yüzeyi */
-    --panel-2:       #2a2140;   /* ikincil yüzey */
-    --ink:           #f3eefb;   /* ana metin */
-    --ink-soft:      #b8aed0;   /* ikincil metin */
-    --gold:          #f5c542;   /* vurgu (orijinal kimlik) */
+    --bg:            #14101a;   
+    --panel:         #1f1830;   
+    --panel-2:       #2a2140;   
+    --ink:           #f3eefb;   
+    --ink-soft:      #b8aed0;   
+    --gold:          #f5c542;   
     --gold-deep:     #e0a92a;
     --line:          rgba(255,255,255,0.10);
     --shadow:        0 24px 60px rgba(0,0,0,0.55);
@@ -59,7 +59,7 @@ body {
 }
 
 /* Görünmez Tıklama Alanları (Hotspots) */
-.hotspot { position: absolute; }
+.hotspot { position: absolute; transition: transform 0.15s ease; }
 .clickable { cursor: pointer; }
 
 .clickable:hover,
@@ -90,6 +90,7 @@ body {
     pointer-events: none;
     font-size: 14px;
     line-height: 1.4;
+    white-space: nowrap;
 }
 .tooltip::after {
     content: "";
@@ -100,7 +101,7 @@ body {
     border: 7px solid transparent;
     border-top-color: rgba(20, 16, 26, 0.95);
 }
-.tip-line { white-space: nowrap; }
+
 .tip-line em { color: var(--gold); font-style: normal; font-weight: 600; }
 
 .tooltip h3 { margin: 0 0 8px 0; color: var(--gold); font-family: var(--font-display); font-size: 15px; }
@@ -511,30 +512,6 @@ canvas {
     background: rgba(255,255,255,0.15);
     box-shadow: 0 120px 0 rgba(255,255,255,0.15);
 }
-
-/* =========================================================
-   KAHVE BİLDİRİMİ (TOAST EFEKTİ)
-========================================================= */
-.toast {
-    position: fixed;
-    bottom: -150px;
-    right: 20px;
-    background: rgba(31, 24, 48, 0.95);
-    border: 1px solid var(--gold);
-    color: var(--ink);
-    padding: 16px 24px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-    transition: bottom 0.5s var(--ease);
-    z-index: 1000;
-}
-.toast.show { bottom: 30px; }
-.toast-icon { font-size: 32px; }
-.toast-content { font-size: 14px; line-height: 1.6; font-family: var(--font-body); }
-.toast-content strong { color: var(--gold); }
 
 /* =========================================================
    RÜYA VE GECE MODU EFEKTİ

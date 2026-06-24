@@ -43,7 +43,7 @@ function showSlide(index) {
    GİYSİ DOLABI (TARZIM) MANTIĞI
 ================================= */
 let currentWardrobeIndex = 1;
-const totalWardrobeImages = 9; // 9 Olarak Güncellendi
+const totalWardrobeImages = 9; 
 
 function openWardrobeModal() {
     openModal('wardrobe-modal');
@@ -80,37 +80,30 @@ function closeBookshelfModal() {
 function openMusicModal() { openModal('music-modal'); }
 function closeMusicModal() { closeModal('music-modal'); }
 
+
 /* ===============================
-   KAHVE KUPASI MANTIĞI
+   KAHVE KUPASI MANTIĞI (TOOLTIP)
 ================================= */
 let coffeeClicks = 0;
-let coffeeTimeout;
 
 function drinkCoffee() {
     coffeeClicks++;
-    const toast = document.getElementById('coffee-toast');
-    const textElement = document.getElementById('toast-text');
     
     // Her tıklamada değişen dinamik rakamlar
     const linesOfCode = 340 + (coffeeClicks * 85);
     const remainingBugs = Math.max(0, 7 - coffeeClicks);
     
-    textElement.innerHTML = `
-        <strong>Sistem Raporu</strong><br>
-        Tüketilen kahve: ${coffeeClicks}<br>
-        Yazılan kod satırı: ${linesOfCode}<br>
-        Kalan bug: ${remainingBugs === 0 ? "Tertemiz! 🎉" : remainingBugs + " 🐛"}
-    `;
+    // Değerleri Tooltip içine yazdır
+    document.getElementById('coffee-count').innerText = coffeeClicks;
+    document.getElementById('code-count').innerText = linesOfCode;
+    document.getElementById('bug-count').innerText = remainingBugs === 0 ? "Tertemiz! 🎉" : remainingBugs + " 🐛";
     
-    toast.classList.add('show');
-    
-    // Önceki zamanlayıcıyı iptal et, bildirimi ekranda tut
-    if(coffeeTimeout) clearTimeout(coffeeTimeout);
-    
-    // 4 saniye sonra bildirimi gizle
-    coffeeTimeout = setTimeout(() => {
-        toast.classList.remove('show');
-    }, 4000);
+    // Tıklandığını hissettirmek için ufak bir animasyon
+    const cup = document.getElementById('coffee-cup');
+    cup.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+        cup.style.transform = 'scale(1)';
+    }, 150);
 }
 
 /* ===============================
@@ -125,7 +118,6 @@ function startDream() {
     dreamText.classList.remove('hide-text');
     overlay.classList.add('active');
     
-    // 2.5 saniye ekran siyah kalıp Zzz... yazar, sonra resim belirirken yazı silinir
     dreamTimeout = setTimeout(() => {
         dreamText.classList.add('hide-text');
     }, 2500);
@@ -171,7 +163,7 @@ function detachGameKeys() {
     gameKeyDown = gameKeyUp = null;
 }
 
-/* ---------- BLOK KIRICI (çok seviyeli) ---------- */
+/* ---------- BLOK KIRICI ---------- */
 function startGame() {
     showSection('game-container');
     if (gameInterval) clearInterval(gameInterval);
@@ -380,7 +372,6 @@ document.addEventListener('DOMContentLoaded', () => {
         (open === 'pc-modal') ? closePC() : closeModal(open);
     });
 
-    // Bütün modalların arka planına tıklanınca kapanmasını sağlar
     ['window-modal', 'wardrobe-modal', 'bookshelf-modal', 'music-modal'].forEach(id => {
         const modal = document.getElementById(id);
         if (modal) {

@@ -20,12 +20,7 @@
 <div class="room-container">
     <div class="room-wrapper">
         <img src="img/oda.png" alt="Çalışma odamın görünümü" class="room-image">
-
-        <div class="hotspot clickable" id="computer" style="top: 55%; left: 18%; width: 18%; height: 35%;"
-             role="button" tabindex="0" aria-label="Çalışma masamı aç" onclick="openPC()">
-            <div class="tooltip"><span class="tip-line">💻 Çalışma Masam</span></div>
-        </div>
-
+        
         <div class="hotspot clickable" id="window" style="top: 22%; left: 33%; width: 25%; height: 55%;"
              role="button" tabindex="0" aria-label="Şehirler ve hayaller penceresini aç" onclick="openWindowModal()">
             <div class="tooltip"><span class="tip-line">🌆 Şehirler ve Hayaller</span></div>
@@ -44,16 +39,26 @@
         <div class="hotspot clickable" id="bed" style="top: 70%; left: 58%; width: 25%; height: 25%;"
              role="button" tabindex="0" aria-label="Yatak" onclick="startDream()">
             <div class="tooltip"><span class="tip-line">🛏️ Hayallere Dal</span></div>
+        </div> 
+
+        <div class="hotspot clickable" id="computer" style="top: 52%; left: 24%; width: 8%; height: 15%;"
+             role="button" tabindex="0" aria-label="Çalışma masamı aç" onclick="openPC()">
+            <div class="tooltip"><span class="tip-line">💻 Çalışma Masam</span></div>
         </div>
 
-        <div class="hotspot clickable" id="music-player" style="top: 48%; left: 10%; width: 8%; height: 12%;"
-             role="button" tabindex="0" aria-label="Müzik Çalar" onclick="openMusicModal()">
-            <div class="tooltip"><span class="tip-line">🎵 Günün Şarkısı</span></div>
-        </div>
-
-        <div class="hotspot clickable" id="coffee-cup" style="top: 58%; left: 36%; width: 5%; height: 8%;"
+       <div class="hotspot clickable" id="coffee-cup" style="top: 64%; left: 24.5%; width: 3%; height: 5%;"
              role="button" tabindex="0" aria-label="Kahve Kupası" onclick="drinkCoffee()">
-            <div class="tooltip"><span class="tip-line">☕ Sistem Yakıtı</span></div>
+            <div class="tooltip" style="text-align: left; padding: 14px;">
+                <span class="tip-line" style="color: var(--gold); font-size: 15px; margin-bottom: 8px; display: block;"><strong>Sistem Raporu</strong></span>
+                <span class="tip-line" style="display: block; margin-bottom: 4px;">Tüketilen kahve: <span id="coffee-count">0</span></span>
+                <span class="tip-line" style="display: block; margin-bottom: 4px;">Yazılan kod satırı: <span id="code-count">340</span></span>
+                <span class="tip-line" style="display: block;">Kalan bug: <span id="bug-count">7 🐛</span></span>
+            </div>
+        </div>
+        <div class="hotspot clickable" id="music-player" style="top: 15%; left: 5%; width: 6%; height: auto; display: flex; align-items: center; justify-content: center; mix-blend-mode: multiply; opacity: 0.85;"
+             role="button" tabindex="0" aria-label="Müzik Çalar" onclick="openMusicModal()">
+            <img src="img/müzik.png" alt="Müzik" style="width: 100%; height: auto;">
+            <div class="tooltip"><span class="tip-line">🎵 Günün Şarkısı</span></div>
         </div>
     </div>
 </div>
@@ -140,24 +145,18 @@
 </div>
 
 <div id="music-modal" class="modal" role="dialog" aria-modal="true" aria-label="Günün Şarkısı">
-    <div class="modal-content" style="max-width: 400px; text-align: center;">
+    <div class="modal-content" style="max-width: 440px; text-align: center;">
         <span class="close" role="button" tabindex="0" aria-label="Kapat" onclick="closeMusicModal()">×</span>
         <span class="slide-eyebrow">Ritim</span>
         <h2 class="city-title" style="font-size: 1.5em;">Günün Şarkısı 🎧</h2>
         <p style="margin-bottom: 20px;">Bugün kod yazarken bana eşlik eden parça:</p>
         
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <iframe width="100%" height="220" src="https://www.youtube-nocookie.com/embed/Lw4unI3tVNQ?si=MAKLJIIrrFZ9ZZRJ&amp;start=3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.4);"></iframe>
     </div>
 </div>
 
-<div id="coffee-toast" class="toast">
-    <div class="toast-icon">☕</div>
-    <div class="toast-content" id="toast-text">
-        </div>
-</div>
-
 <div id="dream-overlay" class="dream-overlay" onclick="wakeUp()">
-    <img src="img/ruyam.jpg" alt="Rüyam" class="dream-image">
+    <img src="img/ruyam.jpeg" alt="Rüyam" class="dream-image">
     <div class="dream-content">
         <p class="dream-text" id="dream-text">Zzz... Gözler kapanıyor...</p>
         <p class="wake-up-text">Uyanmak için ekrana tıkla</p>
@@ -165,9 +164,7 @@
 </div>
 
 <div id="pc-modal" class="modal" role="dialog" aria-modal="true" aria-label="Masaüstü">
-
     <span class="close-pc" role="button" tabindex="0" aria-label="Bilgisayardan çık" onclick="closePC()">&times;</span>
-
     <div class="pc-wrapper">
         <img src="img/bilgisayar.png" alt="Masaüstü ekranı" class="pc-bg-img">
 
