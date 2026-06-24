@@ -40,14 +40,13 @@ body {
     overflow: hidden;
 }
 
-/* Odanın oranını sabitleyen çerçeve (16:9 formatı) */
 .room-wrapper {
     position: relative;
     width: 100vw;
     height: 56.25vw;
     min-height: 100vh;
     min-width: 177.77vh;
-    transition: transform 0.45s ease;   /* kapanışta yumuşak geri zoom */
+    transition: transform 0.45s ease;
 }
 
 .room-image {
@@ -61,10 +60,8 @@ body {
 
 /* Görünmez Tıklama Alanları (Hotspots) */
 .hotspot { position: absolute; }
-
 .clickable { cursor: pointer; }
 
-/* Beyaz kutu yerine yumuşak ışıltılı çerçeve */
 .clickable:hover,
 .clickable:focus-visible {
     background: radial-gradient(ellipse at center, rgba(245,197,66,0.18), rgba(245,197,66,0.04) 70%);
@@ -94,7 +91,6 @@ body {
     font-size: 14px;
     line-height: 1.4;
 }
-/* küçük ok */
 .tooltip::after {
     content: "";
     position: absolute;
@@ -177,7 +173,6 @@ body {
 }
 .close:hover, .close:focus-visible { color: var(--gold); background: rgba(255,255,255,0.06); outline: none; }
 
-/* Slider ve Resim Stilleri (Şehirler ve Tarzım) */
 .slider-container { text-align: center; }
 .city-slide { animation: fadeEffect 0.5s; }
 
@@ -242,7 +237,6 @@ body {
     transform: translateY(-50%) scale(1.08);
 }
 
-/* Nokta göstergeleri (şehirler) */
 .slider-dots { display: flex; gap: 10px; justify-content: center; margin-top: 22px; }
 .slider-dots .dot {
     width: 10px; height: 10px;
@@ -253,7 +247,6 @@ body {
 }
 .slider-dots .dot.active { background: var(--gold); transform: scale(1.25); }
 
-/* Sayaç (tarzım) */
 .wardrobe-counter {
     display: inline-block;
     margin-top: 16px;
@@ -268,23 +261,18 @@ body {
 /* =========================================================
    BİLGİSAYAR EKRANI VE EFEKTLER
 ========================================================= */
-/* Masaya tıklayınca SOLDAKİ iMac ekranına ÇOK YAVAŞ zoom (2.2sn),
-   sonra bilgisayar arayüzü gelir. opacity:0 yok → lacivert boşluk görünmez. */
 .zoom-in-effect {
     transform: scale(3.3);
-    transform-origin: 28% 59%;   /* masadaki iMac ekranının tam merkezi */
-    transition: transform 2.2s cubic-bezier(0.45, 0, 0.85, 1);  /* yavaş başlar, ekrana doğru süzülür */
+    transform-origin: 28% 59%;
+    transition: transform 2.2s cubic-bezier(0.45, 0, 0.85, 1);
 }
 
-/* ÖNEMLİ: backdrop-filter, position:fixed çocukları (kırmızı çarpı) kendine
-   bağladığı için burada KAPATILIYOR — böylece çarpı her zaman ekranda kalır. */
 #pc-modal {
     background-color: #000;
     overflow: hidden;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
 }
-/* Zoom'dan sonra ekran biraz daha yumuşak belirsin */
 #pc-modal.open { animation: modalFade 0.6s ease; }
 
 .pc-wrapper {
@@ -303,14 +291,12 @@ body {
     display: block;
 }
 
-/* Modal açılırken ekran görseli hafif zoom'dan yerine otursun ("ekrana giriş" hissi") */
 #pc-modal.open .pc-bg-img { animation: screenSettle 0.6s ease-out both; }
 @keyframes screenSettle {
     from { transform: scale(1.18); opacity: 0.25; }
     to   { transform: scale(1);    opacity: 1; }
 }
 
-/* Çıkış Tuşu */
 .close-pc {
     position: fixed;
     top: 28px;
@@ -352,7 +338,6 @@ body {
     outline: none;
 }
 
-/* Cam Efektli (Glassmorphism) Dosya Gezgini */
 .pc-inner-window {
     position: absolute;
     top: 50%;
@@ -416,11 +401,10 @@ canvas {
     margin: 0 auto;
     border-radius: 8px;
     border: 1px solid var(--line);
-    touch-action: none;            /* mobilde kaydırmayı engelle, oyun kaysın */
+    touch-action: none;
     max-width: 100%;
 }
 
-/* Mobil dokunmatik oyun kontrolleri (varsayılan: gizli) */
 .game-touch-controls { display: none; gap: 16px; justify-content: center; margin-top: 14px; }
 .touch-btn {
     width: 64px; height: 48px;
@@ -434,7 +418,6 @@ canvas {
 }
 .touch-btn:active { background: var(--gold); color: #1a1320; }
 
-/* Mobil keşif ipucu */
 .scroll-hint {
     display: none;
     position: fixed;
@@ -455,117 +438,10 @@ canvas {
 @keyframes hintPulse { 0%,100% { opacity: 0.85; } 50% { opacity: 1; transform: translateX(-50%) translateY(-3px); } }
 
 /* =========================================================
-   MOBİL UYUMLULUK VE DOKUNMATİK EKRAN
-========================================================= */
-@media screen and (max-width: 768px) {
-
-    /* ODA TAM EKRAN: yüksekliği ekranı doldurur, genişlik taşar → PARMAKLA KAYDIRARAK gezilir */
-    body { overflow: hidden !important; }
-    .room-container {
-        display: block !important;
-        overflow: auto !important;            /* yatay/dikey kaydırma */
-        -webkit-overflow-scrolling: touch;
-        width: 100vw;
-        height: 100vh;
-    }
-    .room-wrapper {
-        position: relative !important;
-        width: 177.78vh !important;           /* 16:9, yüksekliğe göre → ekranı doldurur */
-        height: 100vh !important;
-        min-width: 0 !important;
-        min-height: 0 !important;
-        margin: 0 !important;
-    }
-
-    .scroll-hint { display: block; }
-
-    /* Tıklanabilir alanlar artık GÖRÜNÜR ve etiketli (dokununca ne olduğu belli) */
-    .hotspot.clickable,
-    .pc-hotspot.clickable {
-        outline: 2px dashed rgba(245,197,66,0.85);
-        outline-offset: -2px;
-        border-radius: 10px;
-        background: rgba(245,197,66,0.12);
-        animation: tapPulse 2.2s ease-in-out infinite;
-    }
-
-    /* Etiketler sürekli görünsün (hover olmadığı için) */
-    .hotspot.clickable .tooltip,
-    .pc-hotspot.clickable .tooltip {
-        display: block !important;
-        animation: none;
-    }
-    .tooltip {
-        max-width: 70vw;
-        font-size: 11px;
-        padding: 7px 10px;
-    }
-    .tip-line { white-space: nowrap; }
-
-    /* Modallar */
-    .modal-content {
-        width: 92% !important;
-        margin: 6vh auto !important;
-        padding: 20px !important;
-        max-height: 86vh !important;
-    }
-    .slider-arrow { width: 44px; height: 44px; font-size: 18px; }
-    .slider-arrow.prev { left: 6px; }
-    .slider-arrow.next { right: 6px; }
-
-    /* BİLGİSAYAR TAM EKRAN: yükseklik ekranı doldurur, görselin oranı korunur */
-    #pc-modal { overflow: auto !important; -webkit-overflow-scrolling: touch; }
-
-    .pc-wrapper {
-        position: relative !important;
-        top: 0 !important;
-        left: 0 !important;
-        transform: none !important;
-        height: 100vh !important;
-        width: 74.07vh !important;    /* 1:1.35 oran → görsel kırpılmadan ekranı doldurur */
-        margin: 0 auto !important;
-    }
-
-    /* Dosya gezgini ekranın ortasında sabit dursun (kaydırmadan etkilenmesin) */
-    .pc-inner-window {
-        position: fixed !important;
-        width: 92% !important;
-        min-width: 0 !important;
-        max-width: 92% !important;
-    }
-    .window-body { padding: 20px; }
-
-    /* Kırmızı çarpı her zaman görünür (artık viewport'a sabit) */
-    .close-pc {
-        position: fixed !important;
-        top: 14px !important;
-        right: 14px !important;
-        width: 50px !important;
-        height: 50px !important;
-        font-size: 30px !important;
-    }
-
-    canvas { width: 100% !important; height: auto !important; }
-    .game-touch-controls { display: flex; }   /* mobilde sol/sağ butonları göster */
-}
-
-@keyframes tapPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(245,197,66,0.0); }
-    50%      { box-shadow: 0 0 14px 2px rgba(245,197,66,0.35); }
-}
-
-/* Hareketi azalt tercihi: yalnızca sürekli dönen dekoratif animasyonları sakinleştir.
-   Masaya zoom efekti BİLEREK korunur (kullanıcı bu geçişi özellikle istedi). */
-@media (prefers-reduced-motion: reduce) {
-    .scroll-hint,
-    .hotspot.clickable,
-    .pc-hotspot.clickable { animation: none !important; }
-}
-/* =========================================================
    KÜTÜPHANE (KİTAPLIK) EFEKTLERİ
 ========================================================= */
 .library-container {
-    background: linear-gradient(160deg, #2a1f1d, #1a1210); /* Ahşap/Karanlık hissiyatı */
+    background: linear-gradient(160deg, #2a1f1d, #1a1210);
 }
 
 .bookshelf {
@@ -581,7 +457,7 @@ canvas {
     align-items: flex-end;
     justify-content: center;
     gap: 4px;
-    border-bottom: 16px solid #4a3018; /* Ahşap raf kalınlığı */
+    border-bottom: 16px solid #4a3018;
     box-shadow: 0 8px 15px rgba(0,0,0,0.6);
     padding-bottom: 0;
     border-radius: 4px;
@@ -599,19 +475,17 @@ canvas {
     position: relative;
 }
 
-/* Kitapların üzerine fare ile gelince hafif yukarı kalkma efekti */
 .book:hover {
     transform: translateY(-15px);
     box-shadow: inset 4px 0 10px rgba(0,0,0,0.15), inset -2px 0 5px rgba(0,0,0,0.3), 8px 10px 15px rgba(0,0,0,0.6);
     z-index: 2;
 }
 
-/* Yazıların dikey olması */
 .book-title {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     transform: rotate(180deg);
-    color: #f0e6d2; /* Eskimiş sayfa rengi */
+    color: #f0e6d2;
     font-family: serif;
     font-size: 14px;
     font-weight: 600;
@@ -622,7 +496,6 @@ canvas {
     pointer-events: none;
 }
 
-/* Kitap Kapak Renkleri (Gerçekçi gölgelerle) */
 .book.red { background: linear-gradient(to right, #7b1113, #8b0000, #5a0000); }
 .book.blue { background: linear-gradient(to right, #102a4a, #00008b, #00005a); }
 .book.green { background: linear-gradient(to right, #114a11, #006400, #003a00); }
@@ -630,7 +503,6 @@ canvas {
 .book.black { background: linear-gradient(to right, #2c3535, #2f4f4f, #1a2f2f); }
 .book.purple { background: linear-gradient(to right, #3a114a, #4b0082, #2a004a); }
 
-/* Kitap kapaklarındaki yatay çizgiler (eski kitap tasarımı detayları) */
 .book::after {
     content: "";
     position: absolute;
@@ -638,4 +510,199 @@ canvas {
     height: 2px;
     background: rgba(255,255,255,0.15);
     box-shadow: 0 120px 0 rgba(255,255,255,0.15);
+}
+
+/* =========================================================
+   KAHVE BİLDİRİMİ (TOAST EFEKTİ)
+========================================================= */
+.toast {
+    position: fixed;
+    bottom: -150px;
+    right: 20px;
+    background: rgba(31, 24, 48, 0.95);
+    border: 1px solid var(--gold);
+    color: var(--ink);
+    padding: 16px 24px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    transition: bottom 0.5s var(--ease);
+    z-index: 1000;
+}
+.toast.show { bottom: 30px; }
+.toast-icon { font-size: 32px; }
+.toast-content { font-size: 14px; line-height: 1.6; font-family: var(--font-body); }
+.toast-content strong { color: var(--gold); }
+
+/* =========================================================
+   RÜYA VE GECE MODU EFEKTİ
+========================================================= */
+.dream-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s ease-in-out;
+}
+.dream-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.dream-image {
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 4s ease-in-out 2.5s, transform 8s ease-out 2.5s;
+    z-index: 1;
+}
+.dream-overlay.active .dream-image {
+    opacity: 0.85;
+    transform: scale(1);
+}
+
+.dream-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+.dream-text {
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 2px;
+    opacity: 1;
+    transition: opacity 2s ease-in-out;
+    animation: pulseText 2s infinite;
+}
+.dream-overlay.active .dream-text.hide-text {
+    opacity: 0;
+    animation: none;
+}
+
+.wake-up-text {
+    margin-top: 30px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: opacity 2s ease 6s;
+}
+.dream-overlay.active .wake-up-text {
+    opacity: 1;
+}
+
+@keyframes pulseText {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* =========================================================
+   MOBİL UYUMLULUK VE DOKUNMATİK EKRAN
+========================================================= */
+@media screen and (max-width: 768px) {
+    body { overflow: hidden !important; }
+    .room-container {
+        display: block !important;
+        overflow: auto !important;
+        -webkit-overflow-scrolling: touch;
+        width: 100vw;
+        height: 100vh;
+    }
+    .room-wrapper {
+        position: relative !important;
+        width: 177.78vh !important;
+        height: 100vh !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+    }
+    .scroll-hint { display: block; }
+
+    .hotspot.clickable,
+    .pc-hotspot.clickable {
+        outline: 2px dashed rgba(245,197,66,0.85);
+        outline-offset: -2px;
+        border-radius: 10px;
+        background: rgba(245,197,66,0.12);
+        animation: tapPulse 2.2s ease-in-out infinite;
+    }
+
+    .hotspot.clickable .tooltip,
+    .pc-hotspot.clickable .tooltip {
+        display: block !important;
+        animation: none;
+    }
+    .tooltip {
+        max-width: 70vw;
+        font-size: 11px;
+        padding: 7px 10px;
+    }
+    .tip-line { white-space: nowrap; }
+
+    .modal-content {
+        width: 92% !important;
+        margin: 6vh auto !important;
+        padding: 20px !important;
+        max-height: 86vh !important;
+    }
+    .slider-arrow { width: 44px; height: 44px; font-size: 18px; }
+    .slider-arrow.prev { left: 6px; }
+    .slider-arrow.next { right: 6px; }
+
+    #pc-modal { overflow: auto !important; -webkit-overflow-scrolling: touch; }
+
+    .pc-wrapper {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        height: 100vh !important;
+        width: 74.07vh !important;
+        margin: 0 auto !important;
+    }
+
+    .pc-inner-window {
+        position: fixed !important;
+        width: 92% !important;
+        min-width: 0 !important;
+        max-width: 92% !important;
+    }
+    .window-body { padding: 20px; }
+
+    .close-pc {
+        position: fixed !important;
+        top: 14px !important;
+        right: 14px !important;
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 30px !important;
+    }
+
+    canvas { width: 100% !important; height: auto !important; }
+    .game-touch-controls { display: flex; }
+}
+
+@keyframes tapPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,197,66,0.0); }
+    50%      { box-shadow: 0 0 14px 2px rgba(245,197,66,0.35); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-hint,
+    .hotspot.clickable,
+    .pc-hotspot.clickable { animation: none !important; }
 }

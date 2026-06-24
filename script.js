@@ -43,7 +43,7 @@ function showSlide(index) {
    GİYSİ DOLABI (TARZIM) MANTIĞI
 ================================= */
 let currentWardrobeIndex = 1;
-const totalWardrobeImages = 9;
+const totalWardrobeImages = 9; // 9 Olarak Güncellendi
 
 function openWardrobeModal() {
     openModal('wardrobe-modal');
@@ -65,6 +65,79 @@ function updateWardrobeImage() {
 }
 
 /* ===============================
+   KİTAPLIK MANTIĞI
+================================= */
+function openBookshelfModal() {
+    openModal('bookshelf-modal');
+}
+function closeBookshelfModal() {
+    closeModal('bookshelf-modal');
+}
+
+/* ===============================
+   MÜZİK ÇALAR MANTIĞI
+================================= */
+function openMusicModal() { openModal('music-modal'); }
+function closeMusicModal() { closeModal('music-modal'); }
+
+/* ===============================
+   KAHVE KUPASI MANTIĞI
+================================= */
+let coffeeClicks = 0;
+let coffeeTimeout;
+
+function drinkCoffee() {
+    coffeeClicks++;
+    const toast = document.getElementById('coffee-toast');
+    const textElement = document.getElementById('toast-text');
+    
+    // Her tıklamada değişen dinamik rakamlar
+    const linesOfCode = 340 + (coffeeClicks * 85);
+    const remainingBugs = Math.max(0, 7 - coffeeClicks);
+    
+    textElement.innerHTML = `
+        <strong>Sistem Raporu</strong><br>
+        Tüketilen kahve: ${coffeeClicks}<br>
+        Yazılan kod satırı: ${linesOfCode}<br>
+        Kalan bug: ${remainingBugs === 0 ? "Tertemiz! 🎉" : remainingBugs + " 🐛"}
+    `;
+    
+    toast.classList.add('show');
+    
+    // Önceki zamanlayıcıyı iptal et, bildirimi ekranda tut
+    if(coffeeTimeout) clearTimeout(coffeeTimeout);
+    
+    // 4 saniye sonra bildirimi gizle
+    coffeeTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+    }, 4000);
+}
+
+/* ===============================
+   RÜYA EKRANI (GECE MODU)
+================================= */
+let dreamTimeout;
+
+function startDream() {
+    const overlay = document.getElementById('dream-overlay');
+    const dreamText = document.getElementById('dream-text');
+    
+    dreamText.classList.remove('hide-text');
+    overlay.classList.add('active');
+    
+    // 2.5 saniye ekran siyah kalıp Zzz... yazar, sonra resim belirirken yazı silinir
+    dreamTimeout = setTimeout(() => {
+        dreamText.classList.add('hide-text');
+    }, 2500);
+}
+
+function wakeUp() {
+    const overlay = document.getElementById('dream-overlay');
+    overlay.classList.remove('active');
+    if(dreamTimeout) clearTimeout(dreamTimeout);
+}
+
+/* ===============================
    BİLGİSAYAR VE OYUN MANTIĞI
 ================================= */
 let gameInterval;
@@ -74,7 +147,6 @@ let gameKeyUp = null;
 function openPC() {
     const room = document.querySelector('.room-wrapper');
     room.classList.add('zoom-in-effect');
-    // Yavaş zoom (2.2sn) neredeyse bitince bilgisayar arayüzü gelir.
     setTimeout(() => { openModal('pc-modal'); }, 1750);
 }
 function closePC() {
@@ -103,12 +175,11 @@ function detachGameKeys() {
 function startGame() {
     showSection('game-container');
     if (gameInterval) clearInterval(gameInterval);
-    detachGameKeys();   // önceki turdan kalan dinleyicileri temizle (kritik hata düzeltmesi)
+    detachGameKeys();
 
     const canvas = document.getElementById("brickBreaker");
     const ctx = canvas.getContext("2d");
 
-    // Seviye tasarımı: satır/sütun arttıkça ve top hızlandıkça zorlaşır
     const LEVELS = [
         { rows: 3, cols: 5, speed: 2.4 },
         { rows: 4, cols: 6, speed: 2.9 },
@@ -119,7 +190,7 @@ function startGame() {
     let level = 0;
     let score = 0;
     let lives = 3;
-    let state = "play";            // play | levelup | gameover | win
+    let state = "play";
 
     const ballRadius   = 9;
     const paddleHeight = 12;
@@ -153,7 +224,6 @@ function startGame() {
     }
     buildLevel();
 
-    /* --- Klavye --- */
     gameKeyDown = function (e) {
         if (e.key === "ArrowRight" || e.key === "Right") rightPressed = true;
         else if (e.key === "ArrowLeft" || e.key === "Left") leftPressed = true;
@@ -165,17 +235,15 @@ function startGame() {
     document.addEventListener("keydown", gameKeyDown);
     document.addEventListener("keyup", gameKeyUp);
 
-    /* --- Fare / parmak: çubuğu doğrudan sürükle --- */
     function movePaddleToClientX(clientX) {
         const rect = canvas.getBoundingClientRect();
-        const scale = canvas.width / rect.width;     // CSS ölçeklemesini telafi et
+        const scale = canvas.width / rect.width;
         const rx = (clientX - rect.left) * scale;
         if (rx > 0 && rx < canvas.width) paddleX = Math.max(0, Math.min(canvas.width - paddleWidth, rx - paddleWidth / 2));
     }
     canvas.onmousemove = e => { if (state === "play") movePaddleToClientX(e.clientX); };
     canvas.ontouchmove = e => { e.preventDefault(); if (state === "play") movePaddleToClientX(e.touches[0].clientX); };
 
-    /* --- Mobil sol/sağ butonları --- */
     document.querySelectorAll('.touch-btn').forEach(btn => {
         const dir = btn.dataset.dir;
         btn.onpointerdown = () => { dir === 'left' ? (leftPressed = true) : (rightPressed = true); };
@@ -183,7 +251,6 @@ function startGame() {
         btn.onpointerleave = () => { dir === 'left' ? (leftPressed = false) : (rightPressed = false); };
     });
 
-    /* --- Tıkla/dokun: seviye geç ya da yeniden başla --- */
     function advance() {
         if (state === "levelup") { level++; buildLevel(); state = "play"; }
         else if (state === "gameover" || state === "win") { level = 0; score = 0; lives = 3; buildLevel(); state = "play"; }
@@ -281,7 +348,6 @@ function startGame() {
         else if (y + dy > canvas.height - ballRadius) {
             if (x > paddleX && x < paddleX + paddleWidth) {
                 dy = -dy;
-                // çubuğun neresine çarptıysa açıyı ona göre ver (daha kontrollü oyun)
                 const hit = (x - (paddleX + paddleWidth / 2)) / (paddleWidth / 2);
                 dx = LEVELS[level].speed * hit * 1.1;
             } else {
@@ -307,7 +373,6 @@ function startGame() {
 ================================= */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Esc açık modalı kapatır
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
         const open = document.body.dataset.modalOpen;
@@ -315,20 +380,20 @@ document.addEventListener('DOMContentLoaded', () => {
         (open === 'pc-modal') ? closePC() : closeModal(open);
     });
 
-   // Dış karanlık alana tıklayınca kapat (şehir/tarzım/kütüphane)
-    ['window-modal', 'wardrobe-modal', 'bookshelf-modal'].forEach(id => {
+    // Bütün modalların arka planına tıklanınca kapanmasını sağlar
+    ['window-modal', 'wardrobe-modal', 'bookshelf-modal', 'music-modal'].forEach(id => {
         const modal = document.getElementById(id);
-        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(id); });
+        if (modal) {
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(id); });
+        }
     });
 
-    // role="button" alanlar Enter/Space ile çalışsın
     document.querySelectorAll('[role="button"]').forEach(el => {
         el.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
         });
     });
 
-    // Dokunmatikte bilgi balonlu (tıklanamayan) alanlar dokununca açılsın
     const infoHotspots = document.querySelectorAll('.hotspot:not(.clickable)');
     infoHotspots.forEach(h => {
         h.addEventListener('click', (e) => {
@@ -340,7 +405,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.addEventListener('click', () => infoHotspots.forEach(o => o.classList.remove('show-tooltip')));
 
-    // Mobil keşif ipucu
     const hint = document.getElementById('scroll-hint');
     if (hint) {
         const hide = () => { hint.style.opacity = '0'; setTimeout(() => hint.remove(), 500); };
@@ -350,12 +414,3 @@ document.addEventListener('DOMContentLoaded', () => {
         if (rc) rc.addEventListener('scroll', hide, { once: true, passive: true });
     }
 });
-/* ===============================
-   KİTAPLIK MANTIĞI
-================================= */
-function openBookshelfModal() {
-    openModal('bookshelf-modal');
-}
-function closeBookshelfModal() {
-    closeModal('bookshelf-modal');
-}
