@@ -332,9 +332,7 @@ function startGame() {
             else if (state === "gameover") drawBanner("Oyun Bitti", "Skor " + score + " · Tekrar için tıkla");
             return;
         }
-
         collisionDetection();
-
         if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) dx = -dx;
         if (y + dy < ballRadius) { dy = -dy; }
         else if (y + dy > canvas.height - ballRadius) {
@@ -356,7 +354,6 @@ function startGame() {
         x += dx;
         y += dy;
     }
-
     gameInterval = setInterval(draw, 10);
 }
 
